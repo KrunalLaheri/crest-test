@@ -1,0 +1,1171 @@
+{
+	"info": {
+		"_postman_id": "f8e06da6-ae98-4dbb-afd8-51d8c6819754",
+		"name": "Product Management API",
+		"description": "Complete Postman collection for Product Management API with JWT authentication, CRUD operations, and bonus features.\n\n**Base URL:** [http://localhost:8000](http://localhost:8000)\n\n**Features:**\n\n- JWT Authentication\n    \n- Role-based Access Control\n    \n- Product CRUD Operations\n    \n- Filtering & Sorting\n    \n- Excel Export\n    \n- Bulk Operations\n    \n- Search Functionality\n    \n- Rate Limiting\n    \n\n**Roles:**\n\n- Admin: Full CRUD access\n    \n- User: Read-only access",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30307073"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register Admin User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"access_token\", jsonData.tokens.access);",
+									"    pm.environment.set(\"refresh_token\", jsonData.tokens.refresh);",
+									"    console.log(\"Admin user registered successfully!\");",
+									"    console.log(\"Access token saved to environment\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin1@test.com\",\n    \"username\": \"admin1\",\n    \"password\": \"Admin12345\",\n    \"password2\": \"Admin12345\",\n    \"role\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register",
+								""
+							]
+						},
+						"description": "Register a new admin user. Returns user data and JWT tokens.\n\n**Required Fields:**\n- email: Valid email address\n- username: Unique username\n- password: Strong password\n- password2: Password confirmation\n- role: \"admin\" or \"user\"\n\n**Response:**\n- User data\n- JWT access token (1 hour expiry)\n- JWT refresh token (1 day expiry)"
+					},
+					"response": []
+				},
+				{
+					"name": "Register Regular User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    console.log(\"Regular user registered successfully!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user3@test.com\",\n    \"username\": \"regularuser1\",\n    \"password\": \"User123543\",\n    \"password2\": \"User123543\",\n    \"role\": \"user\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register",
+								""
+							]
+						},
+						"description": "Register a regular user with read-only access."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"access_token\", jsonData.tokens.access);",
+									"    pm.environment.set(\"refresh_token\", jsonData.tokens.refresh);",
+									"    console.log(\"Login successful!\");",
+									"    console.log(\"Access token saved to environment\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin1@test.com\",\n    \"password\": \"Admin12345\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login",
+								""
+							]
+						},
+						"description": "Login with email and password. Returns JWT tokens.\n\n**Auto-saves tokens to environment variables for subsequent requests.**"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/auth/profile/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"profile",
+								""
+							]
+						},
+						"description": "Get current user profile information.\n\n**Requires:** JWT authentication"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"access_token\", jsonData.access);",
+									"    if (jsonData.refresh) {",
+									"        pm.environment.set(\"refresh_token\", jsonData.refresh);",
+									"    }",
+									"    console.log(\"Token refreshed successfully!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refresh\": \"{{refresh_token}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/token/refresh/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"token",
+								"refresh",
+								""
+							]
+						},
+						"description": "Refresh the access token using the refresh token.\n\n**Returns:** New access token and optionally new refresh token"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refresh_token\": \"{{refresh_token}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/logout/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout",
+								""
+							]
+						},
+						"description": "Logout and blacklist the refresh token.\n\n**Requires:** JWT authentication"
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication endpoints for user registration, login, logout, and profile management."
+		},
+		{
+			"name": "Products - CRUD",
+			"item": [
+				{
+					"name": "List All Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							]
+						},
+						"description": "Get paginated list of all products.\n\n**Pagination:**\n- Default page size: 20\n- Max page size: 100\n\n**Query Parameters:**\n- page: Page number\n- page_size: Items per page\n\n**Access:** All authenticated users"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"product_id\", jsonData.id);",
+									"    console.log(\"Product created! ID: \" + jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Wireless Mouse\",\n    \"description\": \"Ergonomic wireless mouse with 2.4GHz connectivity\",\n    \"price\": \"29.99\",\n    \"discount\": \"10.00\",\n    \"ssn\": \"MOUSE001\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							]
+						},
+						"description": "Create a new product.\n\n**Required Fields:**\n- title: Product name\n- description: Product description\n- price: Must be > 0\n- ssn: Unique product identifier\n- discount: 0-100 (percentage)\n\n**Optional:**\n- image: Product image file\n\n**Access:** Admin only"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product Details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/{{product_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"{{product_id}}",
+								""
+							]
+						},
+						"description": "Get detailed information about a specific product.\n\n**Access:** All authenticated users"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product (PUT)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Wireless Mouse Pro\",\n    \"description\": \"Premium ergonomic wireless mouse with 2.4GHz connectivity and rechargeable battery\",\n    \"price\": \"39.99\",\n    \"discount\": \"15.00\",\n    \"ssn\": \"MOUSE001\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products/{{product_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"{{product_id}}",
+								""
+							]
+						},
+						"description": "Full update of a product. All fields required.\n\n**Access:** Admin only"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product (PATCH)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"price\": \"34.99\",\n    \"discount\": \"20.00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products/{{product_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"{{product_id}}",
+								""
+							]
+						},
+						"description": "Partial update of a product. Only provided fields are updated.\n\n**Access:** Admin only"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product (Soft Delete)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/{{product_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"{{product_id}}",
+								""
+							]
+						},
+						"description": "Soft delete a product by setting is_active to False.\n\nProduct remains in database but is hidden from normal queries.\n\n**Access:** Admin only"
+					},
+					"response": []
+				},
+				{
+					"name": "Disable Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/{{product_id}}/disable/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"{{product_id}}",
+								"disable",
+								""
+							]
+						},
+						"description": "Disable a product by setting is_active to False.\n\nSimilar to soft delete but uses explicit disable action.\n\n**Access:** Admin only"
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD operations for products with full and partial updates, soft delete functionality."
+		},
+		{
+			"name": "Products - Filtering & Search",
+			"item": [
+				{
+					"name": "Filter by Price Range",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/?price_min=20&price_max=100",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "price_min",
+									"value": "20"
+								},
+								{
+									"key": "price_max",
+									"value": "100"
+								}
+							]
+						},
+						"description": "Filter products by price range.\n\n**Query Parameters:**\n- price_min: Minimum price (gte)\n- price_max: Maximum price (lte)"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Title",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/?title__icontains=mouse",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "title__icontains",
+									"value": "mouse"
+								}
+							]
+						},
+						"description": "Filter products by title (case-insensitive partial match).\n\n**Query Parameters:**\n- title__icontains: Search term\n- title: Exact match"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Description",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/?description__icontains=wireless",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "description__icontains",
+									"value": "wireless"
+								}
+							]
+						},
+						"description": "Filter products by description (case-insensitive partial match)."
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Active Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/?is_active=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "is_active",
+									"value": "true"
+								}
+							]
+						},
+						"description": "Filter products by active status.\n\n**Values:** true, false"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Date Range",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/?created_on_after=2024-01-01&created_on_before=2024-12-31",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "created_on_after",
+									"value": "2024-01-01"
+								},
+								{
+									"key": "created_on_before",
+									"value": "2024-12-31"
+								}
+							]
+						},
+						"description": "Filter products by creation date range.\n\n**Parameters:**\n- created_on_after: Start date\n- created_on_before: End date\n- updated_on_after: Updated after date\n- updated_on_before: Updated before date"
+					},
+					"response": []
+				},
+				{
+					"name": "Combined Filters",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/?title__icontains=laptop&price_min=500&price_max=2000&is_active=true&ordering=-price",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "title__icontains",
+									"value": "laptop"
+								},
+								{
+									"key": "price_min",
+									"value": "500"
+								},
+								{
+									"key": "price_max",
+									"value": "2000"
+								},
+								{
+									"key": "is_active",
+									"value": "true"
+								},
+								{
+									"key": "ordering",
+									"value": "-price"
+								}
+							]
+						},
+						"description": "Combine multiple filters for advanced queries.\n\nThis example finds active laptops priced between $500-$2000, sorted by price (highest first)."
+					},
+					"response": []
+				},
+				{
+					"name": "Search Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/search/?q=wireless mouse",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "wireless mouse"
+								}
+							]
+						},
+						"description": "**[BONUS FEATURE]**\n\nSearch products by keyword across title and description fields.\n\n**Query Parameter:**\n- q: Search keyword (required)\n\n**Returns:** Paginated results matching the search query"
+					},
+					"response": []
+				}
+			],
+			"description": "Advanced filtering and search capabilities for products."
+		},
+		{
+			"name": "Products - Sorting",
+			"item": [
+				{
+					"name": "Sort by Created Date (Newest First)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/?ordering=-created_on",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "ordering",
+									"value": "-created_on"
+								}
+							]
+						},
+						"description": "Sort products by creation date (newest first).\n\n**Use `-` prefix for descending order**"
+					},
+					"response": []
+				},
+				{
+					"name": "Sort by Price (Lowest First)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/?ordering=price",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "ordering",
+									"value": "price"
+								}
+							]
+						},
+						"description": "Sort products by price (ascending - cheapest first)."
+					},
+					"response": []
+				},
+				{
+					"name": "Sort by Price (Highest First)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/?ordering=-price",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "ordering",
+									"value": "-price"
+								}
+							]
+						},
+						"description": "Sort products by price (descending - most expensive first)."
+					},
+					"response": []
+				},
+				{
+					"name": "Sort by Title (A-Z)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/?ordering=title",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "ordering",
+									"value": "title"
+								}
+							]
+						},
+						"description": "Sort products alphabetically by title.\n\n**Available sort fields:**\n- created_on\n- updated_on\n- price\n- title"
+					},
+					"response": []
+				}
+			],
+			"description": "Sort products by various fields in ascending or descending order."
+		},
+		{
+			"name": "Products - Pagination",
+			"item": [
+				{
+					"name": "Get Page 1 (Default)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/?page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Get first page of products.\n\n**Default page size:** 20 items"
+					},
+					"response": []
+				}
+			],
+			"description": "Pagination examples with different page sizes."
+		},
+		{
+			"name": "Products - Bulk And Export",
+			"item": [
+				{
+					"name": "Bulk Create Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"products\": [\n        {\n            \"title\": \"Mechanical Keyboard\",\n            \"description\": \"RGB mechanical keyboard with blue switches\",\n            \"price\": \"79.99\",\n            \"discount\": \"5.00\",\n            \"ssn\": \"KEY001\"\n        },\n        {\n            \"title\": \"Gaming Monitor\",\n            \"description\": \"27 inch 144Hz gaming monitor\",\n            \"price\": \"299.99\",\n            \"discount\": \"10.00\",\n            \"ssn\": \"MON001\"\n        },\n        {\n            \"title\": \"Webcam HD\",\n            \"description\": \"1080p HD webcam with microphone\",\n            \"price\": \"49.99\",\n            \"discount\": \"15.00\",\n            \"ssn\": \"CAM001\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products/bulk_create/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"bulk_create",
+								""
+							]
+						},
+						"description": "**[BONUS FEATURE]**\n\nCreate multiple products in a single request.\n\n**Features:**\n- Validates all products before creation\n- Checks for duplicate SSNs within request\n- Checks for existing SSNs in database\n- Atomic operation (all or nothing)\n- Returns all created products with IDs\n\n**Access:** Admin only"
+					},
+					"response": []
+				},
+				{
+					"name": "Export Products to Excel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/export/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"export",
+								""
+							]
+						},
+						"description": "Export all products to Excel (XLSX) file.\n\n**Features:**\n- Exports all filtered products\n- Formatted headers\n- Includes all product fields\n- Timestamped filename\n- Respects all query parameters\n\n**Response:** XLSX file download\n\n**Example with filters:**\n`/api/products/export/?is_active=true&price_min=20`"
+					},
+					"response": []
+				},
+				{
+					"name": "Export Filtered Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/export/?is_active=true&price_min=20&price_max=100",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"export",
+								""
+							],
+							"query": [
+								{
+									"key": "is_active",
+									"value": "true"
+								},
+								{
+									"key": "price_min",
+									"value": "20"
+								},
+								{
+									"key": "price_max",
+									"value": "100"
+								}
+							]
+						},
+						"description": "Export filtered products to Excel.\n\nOnly exports products matching the filter criteria."
+					},
+					"response": []
+				}
+			],
+			"description": "Bonus features: Bulk operations, Excel export, and advanced search."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	]
+}
