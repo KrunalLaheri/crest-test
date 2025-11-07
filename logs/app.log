@@ -1,0 +1,125 @@
+INFO 2025-11-07 06:24:01,275 autoreload Watching for file changes with StatReloader
+WARNING 2025-11-07 06:24:11,952 log Not Found: /docs
+WARNING 2025-11-07 06:24:11,953 basehttp "GET /docs HTTP/1.1" 404 2664
+WARNING 2025-11-07 06:24:12,085 log Not Found: /favicon.ico
+WARNING 2025-11-07 06:24:12,087 basehttp "GET /favicon.ico HTTP/1.1" 404 2685
+WARNING 2025-11-07 06:24:15,409 log Not Found: /
+WARNING 2025-11-07 06:24:15,411 basehttp "GET / HTTP/1.1" 404 2634
+INFO 2025-11-07 06:24:19,225 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-11-07 06:24:19,254 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-11-07 06:24:19,299 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4170
+INFO 2025-11-07 06:24:19,367 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+INFO 2025-11-07 06:24:19,379 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-11-07 06:24:19,380 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+INFO 2025-11-07 06:24:19,383 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-11-07 06:24:19,384 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+INFO 2025-11-07 06:24:19,384 basehttp "GET /static/admin/css/login.css HTTP/1.1" 200 951
+INFO 2025-11-07 06:24:19,400 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-11-07 06:24:21,736 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4336
+INFO 2025-11-07 06:26:28,768 autoreload Watching for file changes with StatReloader
+WARNING 2025-11-07 06:26:34,974 log Not Found: /
+WARNING 2025-11-07 06:26:34,974 basehttp "GET / HTTP/1.1" 404 2634
+WARNING 2025-11-07 06:26:35,056 log Not Found: /favicon.ico
+WARNING 2025-11-07 06:26:35,058 basehttp "GET /favicon.ico HTTP/1.1" 404 2685
+WARNING 2025-11-07 06:26:45,921 log Not Found: /api/v1/drug-indications/view
+WARNING 2025-11-07 06:26:45,922 basehttp "GET /api/v1/drug-indications/view HTTP/1.1" 404 2736
+WARNING 2025-11-07 06:26:48,634 log Not Found: /api/
+WARNING 2025-11-07 06:26:48,636 basehttp "GET /api/ HTTP/1.1" 404 2664
+INFO 2025-11-07 06:27:01,255 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-11-07 06:27:01,290 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-11-07 06:27:01,321 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4170
+INFO 2025-11-07 06:27:01,391 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+INFO 2025-11-07 06:27:01,405 basehttp "GET /static/admin/css/login.css HTTP/1.1" 200 951
+INFO 2025-11-07 06:27:01,407 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-11-07 06:27:01,409 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-11-07 06:27:01,411 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+INFO 2025-11-07 06:27:01,412 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+INFO 2025-11-07 06:27:01,423 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-11-07 06:27:32,939 autoreload Watching for file changes with StatReloader
+WARNING 2025-11-07 06:36:20,861 log Bad Request: /api/auth/register/
+WARNING 2025-11-07 06:36:20,861 basehttp "POST /api/auth/register/ HTTP/1.1" 400 155
+INFO 2025-11-07 06:37:15,817 basehttp "POST /api/auth/register/ HTTP/1.1" 201 811
+INFO 2025-11-07 06:39:17,421 basehttp "POST /api/auth/login/ HTTP/1.1" 200 799
+WARNING 2025-11-07 06:44:06,897 log Unauthorized: /api/products/
+WARNING 2025-11-07 06:44:06,901 basehttp "GET /api/products/ HTTP/1.1" 401 58
+WARNING 2025-11-07 06:44:12,655 log Unauthorized: /api/products/
+WARNING 2025-11-07 06:44:12,656 basehttp "POST /api/products/ HTTP/1.1" 401 58
+WARNING 2025-11-07 06:45:56,076 log Unauthorized: /api/products/
+WARNING 2025-11-07 06:45:56,076 basehttp "POST /api/products/ HTTP/1.1" 401 172
+INFO 2025-11-07 06:46:17,841 basehttp "POST /api/auth/login/ HTTP/1.1" 200 799
+WARNING 2025-11-07 06:47:22,870 log Unauthorized: /api/products/
+WARNING 2025-11-07 06:47:22,870 basehttp "POST /api/products/ HTTP/1.1" 401 176
+INFO 2025-11-07 06:47:35,003 basehttp "POST /api/auth/login/ HTTP/1.1" 200 799
+INFO 2025-11-07 06:47:43,178 basehttp "POST /api/products/ HTTP/1.1" 201 132
+WARNING 2025-11-07 06:48:04,550 log Bad Request: /api/products/
+WARNING 2025-11-07 06:48:04,551 basehttp "POST /api/products/ HTTP/1.1" 400 49
+WARNING 2025-11-07 06:50:44,089 log Unauthorized: /api/products/
+WARNING 2025-11-07 06:50:44,090 basehttp "GET /api/products/ HTTP/1.1" 401 58
+INFO 2025-11-07 06:50:50,896 basehttp "GET /api/products/ HTTP/1.1" 200 239
+INFO 2025-11-07 06:52:06,721 basehttp "GET /api/products/?price_min=20&price_max=50 HTTP/1.1" 200 239
+INFO 2025-11-07 06:53:08,502 basehttp "GET /api/products/?q=mouse HTTP/1.1" 200 239
+INFO 2025-11-07 06:53:25,464 basehttp "GET /api/products/?price_min=20&price_max=50 HTTP/1.1" 200 239
+INFO 2025-11-07 06:54:16,540 basehttp "GET /api/products/search/?q=mouse HTTP/1.1" 200 239
+INFO 2025-11-07 06:54:22,289 basehttp "GET /api/products/search/?q=mouse HTTP/1.1" 200 239
+WARNING 2025-11-07 06:55:18,661 log Unauthorized: /api/products/export/
+WARNING 2025-11-07 06:55:18,663 basehttp "GET /api/products/export/ HTTP/1.1" 401 58
+INFO 2025-11-07 06:55:26,539 basehttp "GET /api/products/export/ HTTP/1.1" 200 5318
+INFO 2025-11-07 06:59:10,792 basehttp "POST /api/products/bulk_create/ HTTP/1.1" 201 765
+INFO 2025-11-07 07:15:04,873 autoreload Watching for file changes with StatReloader
+INFO 2025-11-07 07:15:18,318 basehttp "GET /api/products/?price_min=20&price_max=50 HTTP/1.1" 200 239
+INFO 2025-11-07 07:15:28,102 basehttp "GET /api/products/?price_min=20&price_max=50 HTTP/1.1" 200 239
+INFO 2025-11-07 07:15:32,033 basehttp "GET /api/products/?price_min=20&price_max=50 HTTP/1.1" 200 239
+INFO 2025-11-07 07:15:46,353 basehttp "GET /api/products/?price_min=20&price_max=50 HTTP/1.1" 200 239
+INFO 2025-11-07 07:15:54,967 basehttp "GET /api/products/?price_min=20&price_max=50 HTTP/1.1" 200 239
+INFO 2025-11-07 07:16:23,174 autoreload /home/admin/Documents/Test/crest-test/apps/products/signals.py changed, reloading.
+INFO 2025-11-07 07:16:23,632 autoreload Watching for file changes with StatReloader
+INFO 2025-11-07 07:19:39,050 autoreload Watching for file changes with StatReloader
+INFO 2025-11-07 07:19:52,908 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-11-07 07:19:53,066 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-11-07 07:19:53,198 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4170
+INFO 2025-11-07 07:19:53,303 basehttp "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-11-07 07:19:53,320 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-11-07 07:19:53,338 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-11-07 07:19:53,354 basehttp "GET /static/admin/css/login.css HTTP/1.1" 304 0
+INFO 2025-11-07 07:19:53,377 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-11-07 07:19:53,379 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-11-07 07:19:53,423 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-11-07 07:27:04,668 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4170
+INFO 2025-11-07 07:31:20,165 basehttp "GET /api/auth/profile/ HTTP/1.1" 200 169
+WARNING 2025-11-07 07:32:50,382 log Unauthorized: /api/auth/profile/
+WARNING 2025-11-07 07:32:50,382 basehttp "PUT /api/auth/profile/ HTTP/1.1" 401 58
+WARNING 2025-11-07 07:32:58,508 log Method Not Allowed: /api/auth/profile/
+WARNING 2025-11-07 07:32:58,509 basehttp "PUT /api/auth/profile/ HTTP/1.1" 405 40
+INFO 2025-11-07 07:33:17,956 basehttp "GET /api/auth/profile/ HTTP/1.1" 200 169
+WARNING 2025-11-07 07:33:57,290 log Method Not Allowed: /api/auth/profile/
+WARNING 2025-11-07 07:33:57,291 basehttp "PUT /api/auth/profile/ HTTP/1.1" 405 40
+WARNING 2025-11-07 07:34:07,103 log Method Not Allowed: /api/auth/profile/
+WARNING 2025-11-07 07:34:07,104 basehttp "PUT /api/auth/profile/ HTTP/1.1" 405 40
+INFO 2025-11-07 08:16:34,109 basehttp "POST /api/auth/register/ HTTP/1.1" 201 807
+WARNING 2025-11-07 08:16:50,418 log Bad Request: /api/auth/register/
+WARNING 2025-11-07 08:16:50,418 basehttp "POST /api/auth/register/ HTTP/1.1" 400 52
+INFO 2025-11-07 08:16:57,626 basehttp "POST /api/auth/register/ HTTP/1.1" 201 812
+INFO 2025-11-07 08:17:20,847 basehttp "POST /api/auth/login/ HTTP/1.1" 200 795
+INFO 2025-11-07 08:17:33,529 basehttp "GET /api/auth/profile/ HTTP/1.1" 200 165
+INFO 2025-11-07 08:17:39,010 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 200 582
+INFO 2025-11-07 08:17:44,432 basehttp "POST /api/auth/logout/ HTTP/1.1" 200 31
+INFO 2025-11-07 08:17:51,828 basehttp "GET /api/products/ HTTP/1.1" 200 603
+WARNING 2025-11-07 08:18:07,603 log Bad Request: /api/auth/logout/
+WARNING 2025-11-07 08:18:07,603 basehttp "POST /api/auth/logout/ HTTP/1.1" 400 32
+INFO 2025-11-07 08:18:14,536 basehttp "GET /api/products/ HTTP/1.1" 200 603
+WARNING 2025-11-07 08:18:25,723 log Too Many Requests: /api/auth/register/
+WARNING 2025-11-07 08:18:25,724 basehttp "POST /api/auth/register/ HTTP/1.1" 429 98
+WARNING 2025-11-07 08:18:35,094 log Too Many Requests: /api/auth/register/
+WARNING 2025-11-07 08:18:35,095 basehttp "POST /api/auth/register/ HTTP/1.1" 429 98
+WARNING 2025-11-07 08:19:08,102 log Too Many Requests: /api/products/
+WARNING 2025-11-07 08:19:08,103 basehttp "GET /api/products/?price_min=20&price_max=100 HTTP/1.1" 429 98
+INFO 2025-11-07 08:27:18,114 autoreload Watching for file changes with StatReloader
+WARNING 2025-11-07 08:27:36,550 log Bad Request: /api/auth/register/
+WARNING 2025-11-07 08:27:36,551 basehttp "POST /api/auth/register/ HTTP/1.1" 400 109
+WARNING 2025-11-07 08:28:01,087 log Bad Request: /api/auth/register/
+WARNING 2025-11-07 08:28:01,087 basehttp "POST /api/auth/register/ HTTP/1.1" 400 58
+INFO 2025-11-07 08:28:06,592 basehttp "POST /api/auth/register/ HTTP/1.1" 201 809
+INFO 2025-11-07 08:28:41,660 basehttp "POST /api/auth/register/ HTTP/1.1" 201 813
+WARNING 2025-11-07 08:28:55,399 log Bad Request: /api/auth/login/
+WARNING 2025-11-07 08:28:55,399 basehttp "POST /api/auth/login/ HTTP/1.1" 400 68
+INFO 2025-11-07 08:29:42,434 basehttp "POST /api/auth/login/ HTTP/1.1" 200 797
